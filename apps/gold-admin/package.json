@@ -1,7 +1,10 @@
 {
-  "name": "@gold-shop/gold-shop",
+  "name": "@gold-shop/gold-admin",
   "version": "0.0.1",
   "private": true,
+  "nx": {
+    "name": "gold-admin"
+  },
   "dependencies": {
     "next": "^15.5.2",
     "react": "^19.1.1",
