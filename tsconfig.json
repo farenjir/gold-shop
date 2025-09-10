@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/gold-shop-e2e"
+    },
+    {
+      "path": "./apps/gold-shop"
+    }
+  ]
+}
