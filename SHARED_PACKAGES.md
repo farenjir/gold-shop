@@ -4,6 +4,14 @@ This document lists all the shared packages installed in the Nx workspace that a
 
 ## 📦 Installed Packages
 
+### Development Dependencies
+- **@svgr/cli** (^8.1.0) - SVG to React component converter
+- **@types/lodash** (^4.17.20) - TypeScript definitions for Lodash
+- **dotenv** (^17.2.2) - Environment variable loader
+- **husky** (^9.1.7) - Git hooks manager
+- **lint-staged** (^16.1.6) - Run linters on staged files
+- **orval** (^7.11.2) - OpenAPI/Swagger code generator
+
 ### UI Components & Styling
 - **@mantine/core** (^8.3.1) - Core Mantine components and styling system
 - **@mantine/dates** (^8.3.1) - Date picker and calendar components
@@ -36,6 +44,39 @@ This document lists all the shared packages installed in the Nx workspace that a
 - **sharp** (^0.34.3) - Image processing
 
 ## 🚀 Usage Examples
+
+### Development Tools
+
+#### SVGR - SVG to React Components
+```bash
+# Convert SVG files to React components
+npx @svgr/cli --out-dir src/components/icons -- src/assets/icons/*.svg
+
+# Convert single SVG file
+npx @svgr/cli --out-dir src/components -- src/assets/logo.svg
+```
+
+#### Orval - API Code Generation
+```bash
+# Generate API client from OpenAPI spec
+npx orval --input ./api-spec.yaml --output ./src/api/generated
+
+# Generate with custom config
+npx orval --config ./orval.config.js
+```
+
+#### Dotenv - Environment Variables
+```typescript
+// In your app or lib
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
+
+// Access variables
+const apiUrl = process.env.API_URL;
+const dbHost = process.env.DB_HOST;
+```
 
 ### Mantine Components
 ```tsx

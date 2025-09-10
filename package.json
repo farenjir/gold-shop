@@ -10,7 +10,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "nx run-many --target=test --all",
-    "build": "nx run-many --target=build --all"
+    "build": "nx run-many --target=build --all",
+    "generate:api": "orval",
+    "generate:icons": "svgr --out-dir libs/shared-ui/src/lib/icons -- src/assets/icons/*.svg",
+    "env:setup": "cp .env .env"
   },
   "private": true,
   "dependencies": {
@@ -52,6 +55,7 @@
     "@nx/playwright": "21.5.1",
     "@nx/workspace": "21.5.1",
     "@playwright/test": "^1.36.0",
+    "@svgr/cli": "^8.1.0",
     "@swc-node/register": "~1.11.1",
     "@swc/cli": "~0.7.8",
     "@swc/core": "~1.13.5",
@@ -62,6 +66,7 @@
     "@types/react-dom": "19.1.9",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.20",
+    "dotenv": "^17.2.2",
     "eslint": "^9.8.0",
     "eslint-config-next": "^15.2.4",
     "eslint-config-prettier": "^10.0.0",
@@ -73,6 +78,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
     "nx": "21.5.1",
+    "orval": "^7.11.2",
     "postcss": "^8.4.47",
     "prettier": "^3.6.2",
     "tailwindcss": "^4.0.0",
