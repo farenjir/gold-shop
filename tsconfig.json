@@ -14,6 +14,18 @@
     },
     {
       "path": "./apps/gold-admin"
+    },
+    {
+      "path": "./libs/shared-data-access"
+    },
+    {
+      "path": "./libs/shared-types"
+    },
+    {
+      "path": "./libs/shared-utils"
+    },
+    {
+      "path": "./libs/shared-ui"
     }
   ]
 }

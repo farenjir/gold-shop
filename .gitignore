@@ -47,4 +47,24 @@ Thumbs.db
 .next
 out
 
+# Test outputs
 test-output
+coverage
+
+# Generated files
+**/out-tsc/**
+**/playwright.config.d.ts
+**/playwright.config.js.d.ts
+
+# API generated files (when available)
+libs/shared-data-access/src/api/generated/**
+libs/shared-data-access/src/admin-api/generated/**
+libs/shared-data-access/src/api/schemas/**
+libs/shared-data-access/src/admin-api/schemas/**
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

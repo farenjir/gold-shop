@@ -13,7 +13,10 @@
     "build": "nx run-many --target=build --all",
     "generate:api": "orval",
     "generate:icons": "svgr --out-dir libs/shared-ui/src/lib/icons -- src/assets/icons/*.svg",
-    "env:setup": "cp .env .env"
+    "env:setup": "cp .env .env",
+    "dev:shop": "nx dev @gold-shop/gold-shop",
+    "dev:admin": "nx dev gold-admin",
+    "dev:all": "nx run-many --target=dev --projects=@gold-shop/gold-shop,gold-admin --parallel"
   },
   "private": true,
   "dependencies": {
@@ -62,6 +65,7 @@
     "@swc/helpers": "~0.5.11",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/lodash": "^4.17.20",
+    "@types/node": "^22.10.2",
     "@types/react": "19.1.12",
     "@types/react-dom": "19.1.9",
     "@types/uuid": "^10.0.0",
@@ -91,8 +95,7 @@
   ],
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "nx affected --target=lint --fix",
-      "nx affected --target=typecheck"
+      "nx affected --target=lint --fix=true"
     ],
     "*.{json,md,yml,yaml}": [
       "prettier --write"

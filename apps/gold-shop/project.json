@@ -1,0 +1,72 @@
+{
+  "name": "@gold-shop/gold-shop",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/gold-shop/src",
+  "projectType": "application",
+  "tags": ["scope:shop", "type:app"],
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/gold-shop"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/gold-shop"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "@gold-shop/gold-shop:build",
+        "dev": true,
+        "port": 3010
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "@gold-shop/gold-shop:build:development",
+          "dev": true,
+          "port": 3010
+        },
+        "production": {
+          "buildTarget": "@gold-shop/gold-shop:build:production",
+          "dev": false,
+          "port": 3010
+        }
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "next dev --port 3010 --turbopack",
+        "cwd": "apps/gold-shop"
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "@gold-shop/gold-shop:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/gold-shop/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/gold-shop/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

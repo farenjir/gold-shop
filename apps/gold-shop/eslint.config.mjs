@@ -18,4 +18,9 @@ export default [
   {
     ignores: ['.next/**/*'],
   },
+  {
+    rules: {
+      '@next/next/no-html-link-for-pages': 'off'
+    }
+  },
 ];

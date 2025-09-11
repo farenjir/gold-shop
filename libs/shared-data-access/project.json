@@ -1,0 +1,32 @@
+{
+  "name": "@gold-shop/shared-data-access",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared-data-access/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:data"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared-data-access",
+        "main": "libs/shared-data-access/src/index.ts",
+        "tsConfig": "libs/shared-data-access/tsconfig.json",
+        "assets": ["libs/shared-data-access/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared-data-access/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "generate-api": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "orval --config ../../orval.config.js"
+      }
+    }
+  }
+}
