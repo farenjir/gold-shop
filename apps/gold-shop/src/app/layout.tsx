@@ -1,6 +1,7 @@
-import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import './global.css';
+
+import { MantineBaseProvider } from '@gold-shop/shared-provider';
 
 export const metadata = {
   title: 'Gold Shop',
@@ -15,9 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <MantineProvider>
+        <MantineBaseProvider>
           {children}
-        </MantineProvider>
+        </MantineBaseProvider>
       </body>
     </html>
   );

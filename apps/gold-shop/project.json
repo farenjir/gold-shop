@@ -4,6 +4,7 @@
   "sourceRoot": "apps/gold-shop/src",
   "projectType": "application",
   "tags": ["scope:shop", "type:app"],
+  "implicitDependencies": ["shared-provider"],
   "targets": {
     "build": {
       "executor": "@nx/next:build",

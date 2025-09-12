@@ -1,0 +1,24 @@
+{
+  "name": "@gold-shop/shared-provider",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@gold-shop/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "react": "^19.1.1",
+    "@mantine/core": "^8.3.1",
+    "@mantine/notifications": "^8.3.1"
+  }
+}
