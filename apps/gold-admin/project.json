@@ -25,25 +25,25 @@
       "options": {
         "buildTarget": "gold-admin:build",
         "dev": true,
-        "port": 3010
+        "port": 3020
       },
       "configurations": {
         "development": {
           "buildTarget": "gold-admin:build:development",
           "dev": true,
-          "port": 3010
+          "port": 3020
         },
         "production": {
           "buildTarget": "gold-admin:build:production",
           "dev": false,
-          "port": 3010
+          "port": 3020
         }
       }
     },
     "dev": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "next dev --port 3010 --turbopack",
+        "command": "next dev --port 3020 --turbopack",
         "cwd": "apps/gold-admin"
       }
     },

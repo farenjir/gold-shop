@@ -4,6 +4,10 @@
 # Environment
 NODE_ENV=development
 
+# Application Ports
+GOLD_SHOP_PORT=3010
+GOLD_ADMIN_PORT=3020
+
 # Next.js Configuration
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=your-nextauth-secret-here

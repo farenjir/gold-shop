@@ -52,10 +52,10 @@ npm run dev
 #### Run Applications
 
 ```bash
-# Run gold-shop (customer store)
+# Run gold-shop (customer store) - Port 3010
 npx nx dev gold-shop
 
-# Run gold-admin (admin panel)
+# Run gold-admin (admin panel) - Port 3020
 npx nx dev gold-admin
 
 # Run both applications
