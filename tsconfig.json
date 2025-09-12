@@ -32,6 +32,9 @@
     },
     {
       "path": "./libs/shared-icons"
+    },
+    {
+      "path": "./libs/shared-i18n"
     }
   ]
 }

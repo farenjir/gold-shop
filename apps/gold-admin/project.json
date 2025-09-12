@@ -4,6 +4,7 @@
   "sourceRoot": "apps/gold-admin/src",
   "projectType": "application",
   "tags": ["scope:admin", "type:app"],
+  "implicitDependencies": ["@gold-shop/shared-i18n"],
   "targets": {
     "build": {
       "executor": "@nx/next:build",

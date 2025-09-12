@@ -1,23 +1,27 @@
-import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import './global.css';
+
+import { getCurrentLocale } from '@gold-shop/shared-i18n';
+import { ClientProviders } from '../providers/ClientProviders';
 
 export const metadata = {
   title: 'Gold Admin',
   description: 'Gold Admin Application',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getCurrentLocale();
+
   return (
-    <html lang="en">
+    <html lang={locale} dir={locale === 'fa' ? 'rtl' : 'ltr'}>
       <body>
-        <MantineProvider>
+        <ClientProviders locale={locale}>
           {children}
-        </MantineProvider>
+        </ClientProviders>
       </body>
     </html>
   );

@@ -1,0 +1,13 @@
+{
+  "name": "@gold-shop/shared-i18n",
+  "version": "0.0.1",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "next-international": "^1.3.1"
+  },
+  "peerDependencies": {
+    "next": "^15.5.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  }
+}

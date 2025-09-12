@@ -5,15 +5,26 @@ import { IconHome, IconUser } from '@tabler/icons-react';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
+import { useI18n, useI18nHelpers } from '@gold-shop/shared-i18n';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
 
 export default function Index() {
   const [count, setCount] = useState(0);
   const [id] = useState(() => uuidv4());
+  const t = useI18n();
+  const { isRTL } = useI18nHelpers();
 
   return (
-    <Container size="md" py="xl">
-      <Text size="xl" fw={700} mb="md">
-        Gold Shop - Shared Packages Test
+    <Container size="md" py="xl" dir={isRTL ? 'rtl' : 'ltr'}>
+      <Group justify="space-between" mb="md">
+        <Text size="xl" fw={700}>
+          {t('shop.title')} - {t('common.loading')}
+        </Text>
+        <LanguageSwitcher />
+      </Group>
+      
+      <Text size="md" mb="lg">
+        {t('shop.description')}
       </Text>
       
       <Group gap="md" mb="lg">
@@ -21,23 +32,23 @@ export default function Index() {
           leftSection={<IconHome size={16} />}
           onClick={() => setCount(c => c + 1)}
         >
-          Count: {count}
+          {t('common.loading')}: {count}
         </Button>
         
         <Button 
           variant="outline" 
           leftSection={<IconUser size={16} />}
         >
-          User ID: {id.slice(0, 8)}...
+          {t('navigation.profile')}: {id.slice(0, 8)}...
         </Button>
       </Group>
 
       <Text size="sm" c="dimmed">
-        Current time: {dayjs().format('YYYY-MM-DD HH:mm:ss')}
+        {t('common.loading')}: {dayjs().format('YYYY-MM-DD HH:mm:ss')}
       </Text>
       
       <Text size="sm" c="dimmed" mt="xs">
-        ✅ All shared packages are working correctly!
+        ✅ {t('common.success')} - {t('common.loading')}!
       </Text>
     </Container>
   );
