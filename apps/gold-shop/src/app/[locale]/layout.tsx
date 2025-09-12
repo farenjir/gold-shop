@@ -1,4 +1,7 @@
 import { ReactNode } from 'react';
+
+import '../global.css';
+
 import { ClientWrapper } from '../../providers/ClientWrapper';
 
 type LocaleLayoutProps = {

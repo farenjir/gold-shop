@@ -2,5 +2,9 @@
 @source "./**/*.{ts,tsx,js,jsx,html}";
 @source "../../libs/**/*.{ts,tsx,js,jsx,html}";
 
+/* Mantine CSS */
+@import '@mantine/core/styles.css';
+@import '@mantine/notifications/styles.css';
+
 /* Project base styles (kept minimal) */
 
