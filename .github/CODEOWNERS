@@ -1,0 +1,32 @@
+# Global owners
+* @maintainer1 @maintainer2
+
+# Apps
+/apps/gold-shop/ @maintainer1 @frontend-team
+/apps/gold-admin/ @maintainer2 @admin-team
+
+# Shared libraries
+/libs/shared-ui/ @maintainer1 @frontend-team
+/libs/shared-provider/ @maintainer1 @frontend-team
+/libs/shared-icons/ @maintainer1 @frontend-team
+/libs/shared-types/ @maintainer1 @maintainer2
+/libs/shared-utils/ @maintainer1 @maintainer2
+/libs/shared-data-access/ @maintainer2 @backend-team
+
+# Configuration files
+package.json @maintainer1 @maintainer2
+nx.json @maintainer1 @maintainer2
+tsconfig.base.json @maintainer1 @maintainer2
+
+# GitHub Actions
+/.github/workflows/ @maintainer1 @maintainer2 @devops-team
+
+# Documentation
+README.md @maintainer1 @maintainer2
+CONTRIBUTING.md @maintainer1 @maintainer2
+CODE_OF_CONDUCT.md @maintainer1 @maintainer2
+SECURITY.md @maintainer1 @maintainer2
+CHANGELOG.md @maintainer1 @maintainer2
+
+# Security
+audit-ci.json @maintainer1 @maintainer2 @security-team

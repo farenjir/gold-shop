@@ -1,101 +1,295 @@
-# GoldShop
+# GoldShop 🏪
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+A modern e-commerce platform for gold trading built with **Next.js**, **Nx**, and **Mantine UI**.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/next?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## 🏗️ Architecture
 
-## Run tasks
+This is a **monorepo** containing two main applications and shared libraries:
 
-To run the dev server for your app, use:
+### Applications
 
-```sh
+- **`gold-shop`** - Customer-facing e-commerce store
+- **`gold-admin`** - Admin panel for managing products and orders
+
+### Shared Libraries
+
+- **`shared-provider`** - Mantine UI provider and theme configuration
+- **`shared-icons`** - Custom icon components
+- **`shared-types`** - TypeScript type definitions
+- **`shared-ui`** - Reusable UI components
+- **`shared-utils`** - Utility functions
+- **`shared-data-access`** - API client and data access layer
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 20+
+- npm or yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd gold-shop
+
+# Install dependencies
+npm install
+
+# Setup environment variables
+cp environment.template .env
+# Edit .env with your configuration
+
+# Start development servers
+npm run dev
+```
+
+### Development Commands
+
+#### Run Applications
+
+```bash
+# Run gold-shop (customer store)
 npx nx dev gold-shop
+
+# Run gold-admin (admin panel)
+npx nx dev gold-admin
+
+# Run both applications
+npm run dev
 ```
 
-To create a production bundle:
+#### Build Applications
 
-```sh
+```bash
+# Build gold-shop
 npx nx build gold-shop
+
+# Build gold-admin
+npx nx build gold-admin
+
+# Build all applications
+npx nx run-many --target=build --projects=tag:type:app
 ```
 
-To see all available targets to run for a project, run:
+#### Testing
 
-```sh
+```bash
+# Run unit tests
+npx nx test gold-shop
+npx nx test gold-admin
+
+# Run E2E tests
+npx nx e2e gold-shop-e2e
+npx nx e2e gold-admin-e2e
+
+# Run all tests
+npx nx run-many --target=test --all
+```
+
+#### Linting & Type Checking
+
+```bash
+# Lint all projects
+npx nx run-many --target=lint --all
+
+# Type check all projects
+npx nx run-many --target=typecheck --all
+```
+
+### Project Structure
+
+```
+gold-shop/
+├── apps/
+│   ├── gold-shop/          # Customer e-commerce store
+│   ├── gold-admin/         # Admin panel
+│   ├── gold-shop-e2e/      # E2E tests for gold-shop
+│   └── gold-admin-e2e/     # E2E tests for gold-admin
+├── libs/
+│   ├── shared-provider/    # Mantine UI provider
+│   ├── shared-icons/       # Custom icons
+│   ├── shared-types/       # TypeScript types
+│   ├── shared-ui/          # UI components
+│   ├── shared-utils/       # Utility functions
+│   └── shared-data-access/ # API client
+└── .github/workflows/      # GitHub Actions CI/CD
+```
+
+## 🛠️ Development
+
+### Adding New Projects
+
+To generate a new Next.js application:
+
+```bash
+npx nx g @nx/next:app my-app
+```
+
+To generate a new React library:
+
+```bash
+npx nx g @nx/react:lib my-lib
+```
+
+To generate a new E2E test project:
+
+```bash
+npx nx g @nx/playwright:configuration my-app-e2e --project=my-app
+```
+
+### Nx Commands
+
+```bash
+# Show project graph
+npx nx graph
+
+# Show project details
 npx nx show project gold-shop
+
+# Run affected projects only
+npx nx affected --target=build
+
+# List all available targets
+npx nx list
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+### Code Generation
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+```bash
+# Generate a new component
+npx nx g @nx/react:component my-component --project=shared-ui
 
-## Add new projects
+# Generate a new service
+npx nx g @nx/js:service my-service --project=shared-data-access
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
-
-```sh
-npx nx g @nx/next:app demo
+# Generate a new hook
+npx nx g @nx/react:hook use-my-hook --project=shared-utils
 ```
 
-To generate a new library, use:
+## 🚀 CI/CD Pipeline
 
-```sh
-npx nx g @nx/react:lib mylib
-```
+This project includes comprehensive GitHub Actions workflows for:
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+### Automated Workflows
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- **CI Pipeline** - Build, test, and lint on every push/PR
+- **CD Pipeline** - Deploy to staging/production
+- **E2E Testing** - Automated end-to-end testing
+- **Security Scanning** - Vulnerability detection and code analysis
+- **Dependency Updates** - Automated dependency management
+- **Release Management** - Automated releases with changelog
 
-## Set up CI!
+### Workflow Features
 
-### Step 1
+- ✅ **Nx Affected** - Only runs on changed projects
+- ✅ **Parallel Execution** - Faster build times
+- ✅ **Caching** - npm and Nx cache optimization
+- ✅ **Multiple Deployment Options** - Vercel, GitHub Pages, Docker
+- ✅ **Security First** - Comprehensive security scanning
+- ✅ **Automated Testing** - Unit, E2E, and visual regression tests
 
-To connect to Nx Cloud, run the following command:
+### Setup CI/CD
 
-```sh
+1. **Connect to Nx Cloud** (optional but recommended):
+
+```bash
 npx nx connect
 ```
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+2. **Configure GitHub Secrets** for deployment:
+   - `VERCEL_TOKEN` - Vercel API token
+   - `VERCEL_ORG_ID` - Vercel organization ID
+   - `VERCEL_GOLD_SHOP_PROJECT_ID` - Vercel project ID for gold-shop
+   - `VERCEL_GOLD_ADMIN_PROJECT_ID` - Vercel project ID for gold-admin
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+3. **Deploy** - Workflows will automatically deploy on push to main branch
 
-### Step 2
+### Manual Workflows
 
-Use the following command to configure a CI workflow for your workspace:
+- **Dependency Updates** - Run weekly or manually
+- **Security Audit** - Run daily or manually
+- **Release** - Trigger with git tags or manually
 
-```sh
-npx nx g ci-workflow
-```
+## 🛠️ Tools & Extensions
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Nx Console
 
-## Install Nx Console
+Install the Nx Console extension for your IDE to get:
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+- Visual task runner
+- Code generation UI
+- Project graph visualization
+- Enhanced autocompletion
 
 [Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-## Useful links
+### Recommended VS Code Extensions
 
-Learn more:
+- Nx Console
+- TypeScript Importer
+- ESLint
+- Prettier
+- Tailwind CSS IntelliSense
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/next?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 📚 Tech Stack
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- **Framework**: Next.js 14
+- **Monorepo**: Nx
+- **UI Library**: Mantine
+- **Styling**: Tailwind CSS
+- **Testing**: Jest, Playwright
+- **Linting**: ESLint
+- **Type Checking**: TypeScript
+- **CI/CD**: GitHub Actions
+- **Deployment**: Vercel, GitHub Pages, Docker
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes
+4. Run tests: `npx nx run-many --target=test --all`
+5. Run linting: `npx nx run-many --target=lint --all`
+6. Commit your changes: `git commit -m 'Add amazing feature'`
+7. Push to the branch: `git push origin feature/amazing-feature`
+8. Open a Pull Request
+
+## 📖 Documentation
+
+### Project Documentation
+
+- [Contributing Guide](CONTRIBUTING.md) - How to contribute to the project
+- [Code of Conduct](CODE_OF_CONDUCT.md) - Community guidelines
+- [Community Guidelines](.github/COMMUNITY_GUIDELINES.md) - Detailed community standards
+- [Maintainers](.github/MAINTAINERS.md) - Project maintainers and team information
+- [Roadmap](.github/ROADMAP.md) - Project roadmap and future plans
+- [Security Policy](SECURITY.md) - Security reporting and guidelines
+- [Privacy Policy](.github/PRIVACY.md) - Data privacy and protection guidelines
+- [Terms of Service](.github/TERMS.md) - Terms and conditions of use
+- [Support Guide](.github/SUPPORT.md) - Getting help and support
+- [Release Checklist](.github/RELEASE_CHECKLIST.md) - Release process and quality assurance
+- [Release Template](.github/RELEASE_TEMPLATE.md) - Template for creating releases
+- [Changelog](CHANGELOG.md) - Project changelog and release notes
+- [Environment Setup](environment.template) - Environment configuration template
+
+### External Documentation
+
+- [Nx Documentation](https://nx.dev)
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Mantine Documentation](https://mantine.dev)
+- [GitHub Actions Documentation](https://docs.github.com/en/actions)
+
+## 🔗 Useful Links
+
+- [Nx Workspace Setup](https://nx.dev/nx-api/next?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Nx Plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Nx Community](https://go.nx.dev/community)
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

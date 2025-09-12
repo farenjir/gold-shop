@@ -1,0 +1,66 @@
+# Environment Configuration Template
+# Copy this file to .env and fill in your values
+
+# Environment
+NODE_ENV=development
+
+# Next.js Configuration
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-nextauth-secret-here
+
+# Database Configuration
+DATABASE_URL=postgresql://username:password@localhost:5432/goldshop
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_NAME=goldshop
+DATABASE_USER=username
+DATABASE_PASSWORD=password
+
+# API Configuration
+API_BASE_URL=http://localhost:3001/api
+API_TIMEOUT=10000
+
+# Authentication
+JWT_SECRET=your-jwt-secret-here
+JWT_EXPIRES_IN=7d
+
+# External Services
+STRIPE_PUBLIC_KEY=pk_test_your_stripe_public_key
+STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
+
+# Email Configuration
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+
+# File Upload
+UPLOAD_MAX_SIZE=10485760
+UPLOAD_ALLOWED_TYPES=image/jpeg,image/png,image/webp
+
+# Redis Configuration (for caching)
+REDIS_URL=redis://localhost:6379
+REDIS_PASSWORD=your-redis-password
+
+# Monitoring
+SENTRY_DSN=your-sentry-dsn
+ANALYTICS_ID=your-analytics-id
+
+# Feature Flags
+ENABLE_ANALYTICS=true
+ENABLE_DEBUG_MODE=false
+ENABLE_MAINTENANCE_MODE=false
+
+# Internationalization
+DEFAULT_LOCALE=en
+SUPPORTED_LOCALES=en,fa
+
+# Security
+CORS_ORIGIN=http://localhost:3000
+RATE_LIMIT_MAX=100
+RATE_LIMIT_WINDOW=900000
+
+# Development
+DEBUG_MODE=true
+LOG_LEVEL=debug
