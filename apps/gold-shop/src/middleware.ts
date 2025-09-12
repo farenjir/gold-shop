@@ -1,6 +1,7 @@
 import { createI18nMiddleware } from 'next-international/middleware';
-import { locales } from '@gold-shop/shared-i18n';
 import type { NextRequest } from 'next/server';
+
+const locales = ['en', 'fa'];
 
 const I18nMiddleware = createI18nMiddleware({
   locales,

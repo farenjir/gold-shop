@@ -21,7 +21,8 @@
     },
     "outDir": "dist",
     "rootDir": "src",
-    "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
+    "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo",
+    "module": "esnext"
   },
   "include": [
     "../../apps/gold-admin/.next/types/**/*.ts",

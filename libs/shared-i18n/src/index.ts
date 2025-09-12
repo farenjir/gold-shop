@@ -1,22 +1,19 @@
 // Export types
 export type { Locale, LocaleConfig, LocaleMessages } from './types';
-export { locales, localeConfigs } from './types';
+export { localeConfigs } from './types';
 
-// Export i18n configuration and hooks
+// Export client-side i18n functions
 export {
-  getI18n,
-  getScopedI18n,
-  getStaticParams,
-  getCurrentLocale,
   I18nProviderClient,
   useI18n,
   useScopedI18n,
   useChangeLocale,
   useCurrentLocale,
+  locales,
 } from './config/i18n';
 
 // Export components
-export { I18nProvider } from './components/I18nProvider';
+export { SimpleI18nProvider } from './components/SimpleI18nProvider';
 
 // Export hooks
 export { useI18nHelpers } from './hooks/useI18nHelpers';

@@ -22,19 +22,21 @@ A shared internationalization library for the Gold Shop monorepo using `next-int
 1. Import the i18n provider in your app's layout:
 
 ```tsx
-import { I18nProvider, getCurrentLocale } from '@gold-shop/shared-i18n';
+import { SimpleI18nProvider } from '@gold-shop/shared-i18n';
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { locale: string };
 }) {
-  const locale = await getCurrentLocale();
+  const { locale } = params;
 
   return (
     <html lang={locale} dir={locale === 'fa' ? 'rtl' : 'ltr'}>
       <body>
-        <I18nProvider locale={locale}>{children}</I18nProvider>
+        <SimpleI18nProvider locale={locale}>{children}</SimpleI18nProvider>
       </body>
     </html>
   );
@@ -46,7 +48,9 @@ export default async function RootLayout({
 ```tsx
 // middleware.ts
 import { createI18nMiddleware } from 'next-international/middleware';
-import { locales } from '@gold-shop/shared-i18n';
+import type { NextRequest } from 'next/server';
+
+const locales = ['en', 'fa'];
 
 const I18nMiddleware = createI18nMiddleware({
   locales,
@@ -54,7 +58,7 @@ const I18nMiddleware = createI18nMiddleware({
   urlMappingStrategy: 'rewrite',
 });
 
-export function middleware(request: Request) {
+export function middleware(request: NextRequest) {
   return I18nMiddleware(request);
 }
 
@@ -158,23 +162,9 @@ Returns helper functions and current locale information:
 
 ### Components
 
-#### `I18nProvider`
+#### `SimpleI18nProvider`
 
 Provider component that wraps your app to enable i18n functionality.
-
-### Server Functions
-
-#### `getCurrentLocale()`
-
-Get the current locale on the server side.
-
-#### `getI18n()`
-
-Get the translation function on the server side.
-
-#### `getScopedI18n(scope)`
-
-Get a scoped translation function on the server side.
 
 ## Adding New Translations
 
