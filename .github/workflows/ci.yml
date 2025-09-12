@@ -1,0 +1,269 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Cache dependencies
+  cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Cache Nx
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nx/cache
+            .nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+  # Lint and type check
+  lint-and-typecheck:
+    runs-on: ubuntu-latest
+    needs: cache
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore Nx cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nx/cache
+            .nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Lint all projects
+        run: npx nx run-many --target=lint --all --parallel
+
+      - name: Type check all projects
+        run: npx nx run-many --target=typecheck --all --parallel
+
+  # Build shared libraries first
+  build-libs:
+    runs-on: ubuntu-latest
+    needs: cache
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore Nx cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nx/cache
+            .nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Build shared libraries
+        run: npx nx run-many --target=build --projects=tag:scope:shared --parallel
+
+  # Build and test gold-shop app
+  build-gold-shop:
+    runs-on: ubuntu-latest
+    needs: [cache, build-libs]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore Nx cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nx/cache
+            .nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Build gold-shop
+        run: npx nx build @gold-shop/gold-shop
+
+      - name: Test gold-shop
+        run: npx nx test @gold-shop/gold-shop
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          files: ./coverage/apps/gold-shop/lcov.info
+          flags: gold-shop
+          name: gold-shop-coverage
+
+  # Build and test gold-admin app
+  build-gold-admin:
+    runs-on: ubuntu-latest
+    needs: [cache, build-libs]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore Nx cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nx/cache
+            .nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Build gold-admin
+        run: npx nx build @gold-shop/gold-admin
+
+      - name: Test gold-admin
+        run: npx nx test @gold-shop/gold-admin
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          files: ./coverage/apps/gold-admin/lcov.info
+          flags: gold-admin
+          name: gold-admin-coverage
+
+  # E2E tests
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: [build-gold-shop, build-gold-admin]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore Nx cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nx/cache
+            .nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run E2E tests for gold-shop
+        run: npx nx e2e @gold-shop/gold-shop-e2e
+
+      - name: Run E2E tests for gold-admin
+        run: npx nx e2e @gold-shop/gold-admin-e2e
+
+      - name: Upload E2E test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+  # Build artifacts for deployment
+  build-artifacts:
+    runs-on: ubuntu-latest
+    needs: [build-gold-shop, build-gold-admin]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore Nx cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nx/cache
+            .nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Build all apps for production
+        run: |
+          npx nx build @gold-shop/gold-shop --configuration=production
+          npx nx build @gold-shop/gold-admin --configuration=production
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            dist/apps/gold-shop
+            dist/apps/gold-admin
+          retention-days: 30

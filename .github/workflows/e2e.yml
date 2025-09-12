@@ -1,0 +1,211 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # E2E tests for gold-shop
+  e2e-gold-shop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore Nx cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nx/cache
+            .nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Build gold-shop
+        run: npx nx build @gold-shop/gold-shop
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run E2E tests for gold-shop
+        run: npx nx e2e @gold-shop/gold-shop-e2e
+
+      - name: Upload E2E test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-gold-shop
+          path: playwright-report/
+          retention-days: 30
+
+      - name: Upload E2E test videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-videos-gold-shop
+          path: test-results/
+          retention-days: 30
+
+  # E2E tests for gold-admin
+  e2e-gold-admin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore Nx cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nx/cache
+            .nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Build gold-admin
+        run: npx nx build @gold-shop/gold-admin
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run E2E tests for gold-admin
+        run: npx nx e2e @gold-shop/gold-admin-e2e
+
+      - name: Upload E2E test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-gold-admin
+          path: playwright-report/
+          retention-days: 30
+
+      - name: Upload E2E test videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-videos-gold-admin
+          path: test-results/
+          retention-days: 30
+
+  # Visual regression tests (if needed)
+  visual-regression:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore Nx cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nx/cache
+            .nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Build apps
+        run: |
+          npx nx build @gold-shop/gold-shop
+          npx nx build @gold-shop/gold-admin
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run visual regression tests
+        run: |
+          npx nx e2e @gold-shop/gold-shop-e2e --config=playwright.visual.config.ts
+          npx nx e2e @gold-shop/gold-admin-e2e --config=playwright.visual.config.ts
+
+      - name: Upload visual test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: visual-test-results
+          path: test-results/
+          retention-days: 30
+
+  # Performance tests
+  performance-tests:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore Nx cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nx/cache
+            .nx/cache
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Build apps
+        run: |
+          npx nx build @gold-shop/gold-shop
+          npx nx build @gold-shop/gold-admin
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run performance tests
+        run: |
+          npx nx e2e @gold-shop/gold-shop-e2e --config=playwright.performance.config.ts
+          npx nx e2e @gold-shop/gold-admin-e2e --config=playwright.performance.config.ts
+
+      - name: Upload performance test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-test-results
+          path: test-results/
+          retention-days: 30
