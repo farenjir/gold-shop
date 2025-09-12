@@ -1,2 +1,2 @@
-export { default as MantineBaseProvider } from './mantine/MantineBaseProvider.js';
+export { default as MantineBaseProvider } from './mantine/MantineBaseProvider';
 

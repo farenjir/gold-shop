@@ -1,5 +1,5 @@
 {
-  "name": "gold-admin-e2e",
+  "name": "@gold-shop/gold-admin-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/gold-admin-e2e/src",
   "projectType": "application",
@@ -20,5 +20,5 @@
       }
     }
   },
-  "implicitDependencies": ["gold-admin"]
+  "implicitDependencies": ["@gold-shop/gold-admin"]
 }

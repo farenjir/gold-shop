@@ -1,5 +1,5 @@
 {
-  "name": "shared-provider",
+  "name": "@gold-shop/shared-provider",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared-provider/src",
   "projectType": "library",

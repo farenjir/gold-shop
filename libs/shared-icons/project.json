@@ -1,5 +1,5 @@
 {
-  "name": "shared-icons",
+  "name": "@gold-shop/shared-icons",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared-icons/src",
   "projectType": "library",

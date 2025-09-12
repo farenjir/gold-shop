@@ -4,7 +4,7 @@ import React from 'react';
 import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 
-import useMantineBaseTheme from './useMantineBaseTheme.js';
+import useMantineBaseTheme from './useMantineBaseTheme';
 
 export default function MantineBaseProvider(props: React.PropsWithChildren) {
   const { mantineBaseTheme } = useMantineBaseTheme('green', false);
