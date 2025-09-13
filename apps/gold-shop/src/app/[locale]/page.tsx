@@ -5,8 +5,8 @@ import { IconHome, IconUser } from '@tabler/icons-react';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
-import { useI18n, useI18nHelpers } from '@gold-shop/shared-i18n';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
+import { useI18n, useI18nHelpers } from '@gold-shop/shared-i18n';
 
 export default function Index() {
   const [count, setCount] = useState(0);
