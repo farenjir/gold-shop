@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 
-import '../global.css';
+import { SimpleI18nProvider } from '@gold-shop/shared-i18n';
 
+import '../global.css';
 import { ClientWrapper } from '../../providers/ClientWrapper';
 
 type LocaleLayoutProps = {
@@ -9,18 +10,22 @@ type LocaleLayoutProps = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function LocaleLayout({ 
-  children, 
-  params 
+export default async function LocaleLayout({
+  children,
+  params,
 }: LocaleLayoutProps) {
   const { locale } = await params;
 
   return (
-    <html lang={locale} dir={locale === 'fa' ? 'rtl' : 'ltr'} suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={locale === 'fa' ? 'rtl' : 'ltr'}
+      suppressHydrationWarning
+    >
       <body suppressHydrationWarning>
-        <ClientWrapper locale={locale}>
-          {children}
-        </ClientWrapper>
+        <SimpleI18nProvider locale={locale}>
+          <ClientWrapper >{children}</ClientWrapper>
+        </SimpleI18nProvider>
       </body>
     </html>
   );

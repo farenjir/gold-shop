@@ -18,11 +18,17 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@gold-shop/shared-data-access": [
+        "../../libs/shared-data-access/src/index.ts"
+      ],
+      "@gold-shop/shared-icons": ["../../libs/shared-icons/src/index.ts"],
+      "@gold-shop/shared-i18n": ["../../libs/shared-i18n/src/index.ts"],
       "@gold-shop/shared-provider": ["../../libs/shared-provider/src/index.ts"],
-      "@gold-shop/shared-icons": ["../../libs/shared-icons/src/index.ts"]
+      "@gold-shop/shared-types": ["../../libs/shared-types/src/index.ts"],
+      "@gold-shop/shared-ui": ["../../libs/shared-ui/src/index.ts"],
+      "@gold-shop/shared-utils": ["../../libs/shared-utils/src/index.ts"]
     },
     "outDir": "dist",
-    "rootDir": "src",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo",
     "module": "esnext"
   },
